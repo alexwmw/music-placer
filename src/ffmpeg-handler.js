@@ -3,8 +3,6 @@ const ffmpegPath = require("ffmpeg-static");
 const ffmpeg = require("fluent-ffmpeg");
 const { app } = require("electron");
 const { v4: uuidv4 } = require("uuid");
-const os = require("node:os");
-const fs = require("node:fs");
 
 ffmpeg.setFfmpegPath(ffmpegPath);
 
