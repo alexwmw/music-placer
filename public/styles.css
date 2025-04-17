@@ -1,0 +1,40 @@
+body {
+	font-family: sans-serif;
+	padding: 2rem;
+}
+h1 {
+	text-align: center;
+}
+.drop-zone-container {
+	width: 100%;
+	display: flex;
+	gap: 10px;
+}
+.drop-zone {
+	flex: 1;
+	aspect-ratio: 2 / 1;
+	border: 2px dashed #ccc;
+	padding: 2rem;
+	margin-bottom: 1rem;
+	text-align: center;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	justify-content: center;
+	align-items: center;
+
+	i {
+		font-size: 5rem;
+		color: brown;
+	}
+}
+.button-container {
+	width: 100%;
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+}
+button {
+	padding: 0.5rem 1rem;
+}
