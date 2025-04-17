@@ -31,7 +31,12 @@ ipcMain.handle(
 			fs.writeFileSync(imagePath, Buffer.from(imageBuffer));
 			fs.writeFileSync(audioPath, Buffer.from(audioBuffer));
 
-			const output = await createVideo(imagePath, audioPath, resolution);
+			const output = await createVideo({
+				imagePath,
+				audioPath,
+				resolution,
+				audioName,
+			});
 
 			fs.unlinkSync(imagePath);
 			fs.unlinkSync(audioPath);

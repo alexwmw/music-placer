@@ -6,10 +6,15 @@ const { v4: uuidv4 } = require("uuid");
 
 ffmpeg.setFfmpegPath(ffmpegPath);
 
-function createVideo(imagePath, audioPath, resolution) {
+function sanitizeFileName(name) {
+	return name.replace(/[^a-z0-9]/gi, "_").toLowerCase();
+}
+
+function createVideo({ imagePath, audioPath, resolution, audioName }) {
 	return new Promise((resolve, reject) => {
 		const outputDir = app.getPath("desktop");
-		const outputPath = path.join(outputDir, `video-${uuidv4()}.mp4`);
+		const baseName = sanitizeFileName(audioName.replace(/\.[^/.]+$/, ""));
+		const outputPath = path.join(outputDir, `${baseName}-${uuidv4()}.mp4`);
 
 		ffmpeg()
 			.input(imagePath)
@@ -17,6 +22,7 @@ function createVideo(imagePath, audioPath, resolution) {
 			.input(audioPath)
 			.videoCodec("libx264")
 			.audioCodec("aac")
+			.audioBitrate("320k")
 			.outputOptions("-tune stillimage")
 			.outputOptions("-shortest")
 			.size(resolution)
