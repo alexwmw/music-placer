@@ -1,10 +1,15 @@
 const path = require("node:path");
-const ffmpegPath = require("ffmpeg-static");
-const ffmpeg = require("fluent-ffmpeg");
 const { app } = require("electron");
+const isDev = !app.isPackaged;
+const ffmpegPath = isDev
+	? require("ffmpeg-static")
+	: path.join(process.resourcesPath, "ffmpeg.exe");
+const ffmpeg = require("fluent-ffmpeg");
 const { v4: uuidv4 } = require("uuid");
 
 ffmpeg.setFfmpegPath(ffmpegPath);
+
+console.log("FFmpeg path:", ffmpegPath);
 
 function sanitizeFileName(name) {
 	return name.replace(/[^a-z0-9]/gi, "_").toLowerCase();
