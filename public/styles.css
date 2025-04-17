@@ -1,6 +1,9 @@
 body {
-	font-family: sans-serif;
 	padding: 2rem;
+
+	font-family: "Noto Sans JP", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
 }
 h1 {
 	text-align: center;
@@ -24,9 +27,24 @@ h1 {
 	justify-content: center;
 	align-items: center;
 
-	i {
+	> i {
 		font-size: 5rem;
 		color: brown;
+		position: relative;
+	}
+	&.checked > i {
+		color: chocolate;
+	}
+	&.checked > i::before {
+		position: absolute;
+	}
+	> i > i {
+		font-size: 5rem;
+		z-index: 2;
+		color: green;
+		scale: 0.6;
+		position: relative;
+		left: 66%;
 	}
 }
 .button-container {
@@ -37,4 +55,5 @@ h1 {
 }
 button {
 	padding: 0.5rem 1rem;
+	font-family: "Noto Sans JP", sans-serif;
 }
