@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Creator</title>
+    <style>
+        body { font-family: sans-serif; padding: 2rem; }
+        .drop-zone { border: 2px dashed #ccc; padding: 2rem; margin-bottom: 1rem; text-align: center; cursor: pointer; }
+        button { margin-right: 1rem; padding: 0.5rem 1rem; }
+    </style>
+</head>
+<body>
+<h1>Video Creator</h1>
+
+<div id="image-drop" class="drop-zone">Drop an image file here</div>
+<div id="audio-drop" class="drop-zone">Drop an audio file here</div>
+
+<button id="yt-btn" disabled>Create YouTube Video (480x360)</button>
+<button id="sq-btn" disabled>Create Square Video (480x480)</button>
+
+<script src="../src/renderer.js"></script>
+</body>
+</html>
