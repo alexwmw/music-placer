@@ -26,6 +26,7 @@ function createVideo({
 	resolution,
 	audioName,
 	destination,
+	onProgress,
 }) {
 	return new Promise((resolve, reject) => {
 		try {
@@ -50,7 +51,8 @@ function createVideo({
 					.size(resolution)
 					.save(outputPath)
 					.on("end", () => resolve(outputPath))
-					.on("error", reject);
+					.on("error", reject)
+					.on("progress", (progress) => onProgress(progress, duration));
 			});
 		} catch (err) {
 			console.error("createVideo crashed:", err);

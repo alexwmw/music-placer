@@ -1,7 +1,7 @@
 let imageFile = null;
 let audioFile = null;
 let destination = localStorage.getItem("destination");
-
+const percentElem = document.getElementById("percent");
 const imageDrop = document.getElementById("image-drop");
 const audioDrop = document.getElementById("audio-drop");
 const ytBtn = document.getElementById("yt-btn");
@@ -159,3 +159,7 @@ function hideSpinner() {
 	ytBtn.classList.remove("hidden");
 	sqBtn.classList.remove("hidden");
 }
+
+window.electronAPI.onVideoProgress((percent) => {
+	percentElem.textContent = Math.max(0, Math.trunc(percent));
+});

@@ -6,8 +6,10 @@ const log = require("electron-log");
 const { v4: uuidv4 } = require("uuid");
 const createVideo = require("./src/ffmpeg-handler");
 
+let win;
+
 function createWindow() {
-	const win = new BrowserWindow({
+	win = new BrowserWindow({
 		width: 800,
 		height: 600,
 		icon: path.join(__dirname, "public/android-chrome-512x512.png"),
@@ -30,6 +32,14 @@ ipcMain.handle("select-folder", async () => {
 	return result.filePaths[0];
 });
 
+function calculatePercent(timeMark, totalDuration) {
+	const parts = timeMark.split(":").map(Number.parseFloat);
+	if (parts.length !== 3) return 0;
+	const [hours, minutes, seconds] = parts;
+	const currentSeconds = hours * 3600 + minutes * 60 + seconds;
+	return Math.min((currentSeconds / totalDuration) * 100, 100);
+}
+
 ipcMain.handle(
 	"create-video",
 	async (
@@ -44,12 +54,18 @@ ipcMain.handle(
 			fs.writeFileSync(imagePath, Buffer.from(imageBuffer));
 			fs.writeFileSync(audioPath, Buffer.from(audioBuffer));
 
+			const onProgress = (progress, totalDuration) => {
+				const percent = calculatePercent(progress.timemark, totalDuration);
+				win.webContents.send("video-progress", percent);
+			};
+
 			const output = await createVideo({
 				imagePath,
 				audioPath,
 				resolution,
 				audioName,
 				destination,
+				onProgress,
 			});
 
 			fs.unlinkSync(imagePath);
