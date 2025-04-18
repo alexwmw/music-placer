@@ -56,9 +56,6 @@ h1 {
 	input {
 		flex: 1;
 	}
-	button {
-		padding: 4px 6px;
-	}
 }
 .button-container {
 	width: 100%;
@@ -69,6 +66,9 @@ h1 {
 button {
 	padding: 0.5rem 1rem;
 	font-family: "Noto Sans JP", sans-serif;
+	&.inline {
+		padding: 4px 6px;
+	}
 }
 .spinner {
 	display: flex;
