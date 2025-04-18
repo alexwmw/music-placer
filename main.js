@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const log = require("electron-log");
 const { v4: uuidv4 } = require("uuid");
 const createVideo = require("./src/ffmpeg-handler");
 
@@ -56,6 +57,7 @@ ipcMain.handle(
 
 			return { success: true, output };
 		} catch (e) {
+			log.error("create-video error:", e);
 			return { success: false, error: e.message };
 		}
 	},
