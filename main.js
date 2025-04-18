@@ -21,9 +21,20 @@ function createWindow() {
 
 app.whenReady().then(createWindow);
 
+ipcMain.handle("select-folder", async () => {
+	const result = await dialog.showOpenDialog({
+		properties: ["openDirectory"],
+	});
+	if (result.canceled) return null;
+	return result.filePaths[0];
+});
+
 ipcMain.handle(
 	"create-video",
-	async (_, { imageBuffer, audioBuffer, imageName, audioName, resolution }) => {
+	async (
+		_,
+		{ imageBuffer, audioBuffer, imageName, audioName, resolution, destination },
+	) => {
 		try {
 			const tempDir = os.tmpdir();
 			const imagePath = path.join(tempDir, `${uuidv4()}-${imageName}`);
@@ -37,6 +48,7 @@ ipcMain.handle(
 				audioPath,
 				resolution,
 				audioName,
+				destination,
 			});
 
 			fs.unlinkSync(imagePath);

@@ -14,10 +14,16 @@ function sanitizeFileName(name) {
 	return name.replace(/[^a-z0-9]/gi, "_").toLowerCase();
 }
 
-function createVideo({ imagePath, audioPath, resolution, audioName }) {
+function createVideo({
+	imagePath,
+	audioPath,
+	resolution,
+	audioName,
+	destination,
+}) {
 	return new Promise((resolve, reject) => {
 		getAudioDurationInSeconds(audioPath).then((duration) => {
-			const outputDir = app.getPath("desktop");
+			const outputDir = destination || app.getPath("desktop");
 			const baseName = sanitizeFileName(audioName.replace(/\.[^/.]+$/, ""));
 			const outputPath = path.join(outputDir, `${baseName}-${uuidv4()}.mp4`);
 

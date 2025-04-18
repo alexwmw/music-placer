@@ -1,10 +1,15 @@
 let imageFile = null;
 let audioFile = null;
+let destination = localStorage.getItem("destination");
 
 const imageDrop = document.getElementById("image-drop");
 const audioDrop = document.getElementById("audio-drop");
 const ytBtn = document.getElementById("yt-btn");
 const sqBtn = document.getElementById("sq-btn");
+const spinner = document.getElementById("spinner");
+const chooseFolderBtn = document.getElementById("choose-folder");
+const destinationInput = document.getElementById("destination");
+destinationInput.value = destination ?? "";
 
 async function cropImage(file, aspectRatio) {
 	const arrayBuffer = await fileToArrayBuffer(file);
@@ -55,7 +60,7 @@ async function cropImage(file, aspectRatio) {
 }
 
 function enableButtons() {
-	if (imageFile && audioFile) {
+	if (imageFile && audioFile && destination) {
 		ytBtn.disabled = false;
 		sqBtn.disabled = false;
 	}
@@ -100,8 +105,20 @@ async function fileToArrayBuffer(file) {
 	});
 }
 
+// Choose new folder
+chooseFolderBtn.onclick = async () => {
+	const selected = await window.electronAPI.selectFolder(); // You’ll add this in preload
+	if (selected) {
+		destination = selected;
+		destinationInput.value = selected;
+		localStorage.setItem("destination", selected);
+	}
+	enableButtons();
+};
+
 async function handleCreate(resolution, aspectRatio) {
 	try {
+		showSpinner();
 		const croppedImageBuffer = await cropImage(imageFile, aspectRatio);
 		const audioBuffer = await fileToArrayBuffer(audioFile);
 
@@ -111,15 +128,34 @@ async function handleCreate(resolution, aspectRatio) {
 			imageName: imageFile.name,
 			audioName: audioFile.name,
 			resolution,
+			destination,
 		});
-
-		alert(
-			res.success ? `Video created at: ${res.output}` : `Error: ${res.error}`,
-		);
+		hideSpinner();
+		setTimeout(() => {
+			alert(
+				res.success
+					? `♡ ❛‿❛ Video created at:\n ${res.output}`
+					: `Error: ${res.error}`,
+			);
+		}, 200);
 	} catch (err) {
 		alert(`Failed to create video: ${err.message}`);
+	} finally {
+		hideSpinner();
 	}
 }
 
 ytBtn.onclick = () => handleCreate("480x360", 4 / 3);
 sqBtn.onclick = () => handleCreate("480x480", 1);
+
+function showSpinner() {
+	spinner.classList.remove("hidden");
+	ytBtn.classList.add("hidden");
+	sqBtn.classList.add("hidden");
+}
+
+function hideSpinner() {
+	spinner.classList.add("hidden");
+	ytBtn.classList.remove("hidden");
+	sqBtn.classList.remove("hidden");
+}

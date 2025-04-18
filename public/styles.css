@@ -47,6 +47,19 @@ h1 {
 		left: 66%;
 	}
 }
+.folder-select {
+	display: flex;
+	gap: 10px;
+	width: 100%;
+	align-items: center;
+	margin-block: 10px;
+	input {
+		flex: 1;
+	}
+	button {
+		padding: 4px 6px;
+	}
+}
 .button-container {
 	width: 100%;
 	display: flex;
@@ -56,4 +69,21 @@ h1 {
 button {
 	padding: 0.5rem 1rem;
 	font-family: "Noto Sans JP", sans-serif;
+}
+.spinner {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-top: 1rem;
+	font-size: 1.2rem;
+	color: #555;
+	justify-content: center;
+}
+
+.spinner i {
+	font-size: 1.5rem;
+}
+
+.hidden {
+	display: none !important;
 }
