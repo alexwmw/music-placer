@@ -1,6 +1,6 @@
 {
 	"name": "music-placer",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Music place helper tool",
 	"main": "main.js",
 	"author": "Alex Wright",

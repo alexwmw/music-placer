@@ -1,6 +1,5 @@
 const path = require("node:path");
 const fs = require("node:fs");
-const { v4: uuidv4 } = require("uuid");
 const { app } = require("electron");
 const { getAudioDurationInSeconds } = require("get-audio-duration");
 const ffmpeg = require("fluent-ffmpeg");
@@ -16,10 +15,6 @@ if (app.isPackaged) {
 // Set paths globally
 ffmpeg.setFfmpegPath(ffmpegPath);
 ffmpeg.setFfprobePath(ffprobePath);
-
-function sanitizeFileName(name) {
-	return name.replace(/[^a-z0-9]/gi, "_").toLowerCase();
-}
 
 function decideOutputPath(outputDir, fileName) {
 	let outputPath = path.join(outputDir, `${fileName}.mp4`);
@@ -43,9 +38,8 @@ function createVideo({
 		try {
 			getAudioDurationInSeconds(audioPath, ffprobePath).then((duration) => {
 				const outputDir = destination || app.getPath("desktop");
-				const baseName = sanitizeFileName(audioName.replace(/\.[^/.]+$/, ""));
-				const fileName = `${baseName}-${resolution}`;
-				const outputPath = decideOutputPath(outputDir, fileName);
+				const baseName = audioName.replace(/\.[^/.]+$/, "");
+				const outputPath = decideOutputPath(outputDir, baseName);
 
 				ffmpeg()
 					.input(imagePath)
