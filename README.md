@@ -18,7 +18,7 @@ Clone the repository and install dependencies:
 ```bash
 npm install
 ```
-Run the build comend to create an installer .exe:
+Run the build command to create an installer .exe:
 
 ```bash
 npm run build
