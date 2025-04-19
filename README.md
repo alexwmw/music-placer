@@ -17,3 +17,10 @@ Clone the repository and install dependencies:
 
 ```bash
 npm install
+```
+Run the build command to create an installer .exe:
+
+```bash
+npm run build
+```
+
