@@ -64,7 +64,9 @@ function createVideo({
 					.save(outputPath)
 					.on("end", () => resolve(outputPath))
 					.on("error", reject)
-					.on("progress", (progress) => onProgress(progress, duration));
+					.on("progress", (progress) =>
+						onProgress(progress, duration, outputPath),
+					);
 			});
 		} catch (err) {
 			console.error("createVideo crashed:", err);

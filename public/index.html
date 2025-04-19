@@ -25,12 +25,13 @@
     </div>
 </div>
 
-<div class="folder-select">
+<div id="choose-folder-container" class="folder-select">
     <label for="destination">Output Folder:</label>
     <input type="text" id="destination" readonly />
     <button  class="inline" id="choose-folder">Choose Folder</button>
 </div>
 
+<div style="font-size: 13px; text-align: center;" id="progress-message" class="hidden"></div>
 <div class="button-container">
     <button id="yt-btn" disabled>Create YouTube Video (480x360)</button>
     <button id="sq-btn" disabled>Create Square Video (480x480)</button>

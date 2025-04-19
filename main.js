@@ -68,9 +68,9 @@ ipcMain.handle(
 			fs.writeFileSync(imagePath, Buffer.from(imageBuffer));
 			fs.writeFileSync(audioPath, Buffer.from(audioBuffer));
 
-			const onProgress = (progress, totalDuration) => {
+			const onProgress = (progress, totalDuration, outputPath) => {
 				const percent = calculatePercent(progress.timemark, totalDuration);
-				win.webContents.send("video-progress", percent);
+				win.webContents.send("video-progress", { percent, outputPath });
 			};
 
 			const output = await createVideo({

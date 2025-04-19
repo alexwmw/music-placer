@@ -8,6 +8,10 @@ const ytBtn = document.getElementById("yt-btn");
 const sqBtn = document.getElementById("sq-btn");
 const progressbar = document.getElementById("progressbar");
 const chooseFolderBtn = document.getElementById("choose-folder");
+const chooseFolderContainer = document.getElementById(
+	"choose-folder-container",
+);
+const progressMessage = document.getElementById("progress-message");
 const destinationInput = document.getElementById("destination");
 destinationInput.value = destination ?? "";
 
@@ -130,14 +134,11 @@ async function handleCreate(resolution, aspectRatio) {
 			resolution,
 			destination,
 		});
-		hideProgressBar();
-		setTimeout(() => {
-			alert(
-				res.success
-					? `♡ ❛‿❛ Video created at:\n ${res.output}`
-					: `Error: ${res.error}`,
-			);
-		}, 200);
+		alert(
+			res.success
+				? `♡ ❛‿❛ Video created at: ${res.output}`
+				: `Error: ${res.error}`,
+		);
 	} catch (err) {
 		alert(`Failed to create video: ${err.message}`);
 	} finally {
@@ -150,20 +151,27 @@ sqBtn.onclick = () => handleCreate("480x480", 1);
 
 function showProgressBar() {
 	progressbar.classList.remove("hidden");
+	progressMessage.classList.remove("hidden");
 	ytBtn.classList.add("hidden");
 	sqBtn.classList.add("hidden");
+	chooseFolderContainer.classList.add("hidden");
+	progressMessage.innerHTML = "<b>Initialising...</b>";
 }
 
 function hideProgressBar() {
 	progressbar.classList.add("hidden");
+	progressMessage.classList.add("hidden");
 	ytBtn.classList.remove("hidden");
 	sqBtn.classList.remove("hidden");
+	chooseFolderContainer.classList.remove("hidden");
 	percentElem.style.flexBasis = "0";
 	percentElem.textContent = "";
+	progressMessage.textContent = "";
 }
 
-window.electronAPI.onVideoProgress((percent) => {
-	const valueStr = `${Math.max(0, Math.trunc(percent))}%`;
-	percentElem.style.flexBasis = valueStr;
-	percentElem.textContent = valueStr;
+window.electronAPI.onVideoProgress(({ percent, outputPath }) => {
+	progressMessage.innerHTML = `<b>Creating video:</b> ${outputPath.split("\\").pop()}`;
+	const percent_truncated = Math.max(0, Math.trunc(percent));
+	percentElem.style.flexBasis = `${percent_truncated + 1}%`;
+	percentElem.textContent = `${percent_truncated + 1}%`;
 });
