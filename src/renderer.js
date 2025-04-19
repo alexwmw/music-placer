@@ -6,7 +6,7 @@ const imageDrop = document.getElementById("image-drop");
 const audioDrop = document.getElementById("audio-drop");
 const ytBtn = document.getElementById("yt-btn");
 const sqBtn = document.getElementById("sq-btn");
-const spinner = document.getElementById("spinner");
+const progressbar = document.getElementById("progressbar");
 const chooseFolderBtn = document.getElementById("choose-folder");
 const destinationInput = document.getElementById("destination");
 destinationInput.value = destination ?? "";
@@ -118,7 +118,7 @@ chooseFolderBtn.onclick = async () => {
 
 async function handleCreate(resolution, aspectRatio) {
 	try {
-		showSpinner();
+		showProgressBar();
 		const croppedImageBuffer = await cropImage(imageFile, aspectRatio);
 		const audioBuffer = await fileToArrayBuffer(audioFile);
 
@@ -130,7 +130,7 @@ async function handleCreate(resolution, aspectRatio) {
 			resolution,
 			destination,
 		});
-		hideSpinner();
+		hideProgressBar();
 		setTimeout(() => {
 			alert(
 				res.success
@@ -141,25 +141,29 @@ async function handleCreate(resolution, aspectRatio) {
 	} catch (err) {
 		alert(`Failed to create video: ${err.message}`);
 	} finally {
-		hideSpinner();
+		hideProgressBar();
 	}
 }
 
 ytBtn.onclick = () => handleCreate("480x360", 4 / 3);
 sqBtn.onclick = () => handleCreate("480x480", 1);
 
-function showSpinner() {
-	spinner.classList.remove("hidden");
+function showProgressBar() {
+	progressbar.classList.remove("hidden");
 	ytBtn.classList.add("hidden");
 	sqBtn.classList.add("hidden");
 }
 
-function hideSpinner() {
-	spinner.classList.add("hidden");
+function hideProgressBar() {
+	progressbar.classList.add("hidden");
 	ytBtn.classList.remove("hidden");
 	sqBtn.classList.remove("hidden");
+	percentElem.style.flexBasis = "0";
+	percentElem.textContent = "";
 }
 
 window.electronAPI.onVideoProgress((percent) => {
-	percentElem.textContent = Math.max(0, Math.trunc(percent));
+	const valueStr = `${Math.max(0, Math.trunc(percent))}%`;
+	percentElem.style.flexBasis = valueStr;
+	percentElem.textContent = valueStr;
 });

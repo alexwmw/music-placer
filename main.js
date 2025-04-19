@@ -12,6 +12,7 @@ function createWindow() {
 	win = new BrowserWindow({
 		width: 800,
 		height: 600,
+		autoHideMenuBar: true,
 		icon: path.join(__dirname, "public/android-chrome-512x512.png"),
 		webPreferences: {
 			preload: path.join(__dirname, "src/preload.js"),
@@ -20,6 +21,19 @@ function createWindow() {
 		},
 	});
 	win.loadFile("public/index.html");
+
+	win.webContents.on("before-input-event", (event, input) => {
+		const isReload =
+			(input.control || input.meta) && input.key.toLowerCase() === "r";
+		const isDevTools =
+			(input.control || input.meta) &&
+			input.shift &&
+			input.key.toLowerCase() === "i";
+
+		if (isReload || isDevTools) {
+			event.preventDefault();
+		}
+	});
 }
 
 app.whenReady().then(createWindow);

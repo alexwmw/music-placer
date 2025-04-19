@@ -41,7 +41,7 @@ h1 {
 	> i > i {
 		font-size: 5rem;
 		z-index: 2;
-		color: green;
+		color: #198a47;
 		scale: 0.6;
 		position: relative;
 		left: 66%;
@@ -70,18 +70,30 @@ button {
 		padding: 4px 6px;
 	}
 }
-.spinner {
+.progressbar {
+	position: relative;
+	width: 90%;
+	margin-inline: auto;
+	height: 10px;
+	background-color: white;
 	display: flex;
-	align-items: center;
-	gap: 10px;
-	margin-top: 1rem;
-	font-size: 1.2rem;
-	color: #555;
-	justify-content: center;
+	justify-content: start;
+	top: 40px;
+	border-radius: 5px;
+	overflow: clip;
+	border: black 1px solid;
 }
 
-.spinner i {
-	font-size: 1.5rem;
+#percent {
+	background-color: black;
+	height: 100%;
+	flex-basis: 0;
+	text-align: right;
+	line-height: 1.1;
+	color: white;
+	font-family: monospace;
+	padding-right: 3px;
+	font-size: 10px;
 }
 
 .hidden {
