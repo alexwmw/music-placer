@@ -66,26 +66,26 @@ h1 {
 button {
 	padding: 0.5rem 1rem;
 	font-family: "Noto Sans JP", sans-serif;
+	&:not(:disabled) {
+		cursor: pointer;
+	}
 	&.inline {
 		padding: 4px 6px;
 	}
 }
 .progressbar {
-	position: relative;
 	width: 90%;
-	margin-inline: auto;
+	margin: 10px auto;
 	height: 10px;
-	background-color: white;
+	background-color: whitesmoke;
 	display: flex;
 	justify-content: start;
 	top: 40px;
-	border-radius: 5px;
+	border-radius: 2px;
 	overflow: clip;
-	border: black 1px solid;
 }
 
 #percent {
-	background-color: black;
 	height: 100%;
 	flex-basis: 0;
 	text-align: right;
@@ -94,6 +94,8 @@ button {
 	font-family: monospace;
 	padding-right: 3px;
 	font-size: 10px;
+	background: linear-gradient(45deg, #78280f, #c11a5b, #157a9e, #159a7b);
+	background-size: 100vw 300px;
 }
 
 .hidden {
