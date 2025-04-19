@@ -23,6 +23,7 @@ function createWindow() {
 	win.loadFile("public/index.html");
 
 	win.webContents.on("before-input-event", (event, input) => {
+		if (!app.isPackaged) return;
 		const isReload =
 			(input.control || input.meta) && input.key.toLowerCase() === "r";
 		const isDevTools =
