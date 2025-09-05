@@ -123,11 +123,12 @@ chooseFolderBtn.onclick = async () => {
 async function handleCreate(resolution, aspectRatio) {
 	try {
 		showProgressBar();
-		const croppedImageBuffer = await cropImage(imageFile, aspectRatio);
+		// const croppedImageBuffer = await cropImage(imageFile, aspectRatio);
+		const imageBuffer = 	await fileToArrayBuffer(imageFile);
 		const audioBuffer = await fileToArrayBuffer(audioFile);
 
 		const res = await window.electronAPI.createVideo({
-			imageBuffer: croppedImageBuffer,
+			imageBuffer,
 			audioBuffer,
 			imageName: imageFile.name,
 			audioName: audioFile.name,

@@ -52,6 +52,7 @@ function createVideo({
 						"-tune stillimage",
 						"-pix_fmt yuv420p",
 						"-movflags +faststart",
+						`-vf scale=${resolution.replace("x", ":")},setsar=1` // stretch image to fit
 					])
 					.duration(duration)
 					.size(resolution)
