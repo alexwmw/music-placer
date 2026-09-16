@@ -2,7 +2,8 @@
 node_modules/
 
 # Electron build output
-dist/
+dist/*
+!dist/**/*.exe
 out/
 build/
 
