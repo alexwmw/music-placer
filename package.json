@@ -45,6 +45,6 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"electron": "^35.1.5",
-		"electron-builder": "^26.0.12"
+		"electron-builder": "26.8.1"
 	}
 }
